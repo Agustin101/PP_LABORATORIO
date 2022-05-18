@@ -35,7 +35,7 @@ struct
 
 int agregarCensista(Censista *list, int len);
 int sortPassengersByFlyCode(Censista* list, int len, int order); // por ahora no
-int printCensistas(Censista* list, int length);
+void printCensistas(Censista *censistas, int length);
 int sortPassengersByName(Censista* list, int len, int order); // por ahora no
 int removeCensista(Censista *censista, int len);
 int findCensistaById(Censista* list, int len,int id);

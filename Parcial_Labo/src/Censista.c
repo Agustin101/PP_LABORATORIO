@@ -6,11 +6,10 @@
  */
 #include "Censista.h"
 
-/** \brief To indicate that all position in the array are empty,* this function put the flag (isEmpty)
- * in TRUE in all* position of the array
- * \param list Censista* Pointer to array of passenger
- * \param len int Array length
- * \return int Return (-1) if Error [Invalid length or NULL pointer] - (0) if Ok*
+/** \brief Inicia todas las posiciones del array con la flag isEmpty en 1
+ * \param list Censista* puntero al array de censistas
+ * \param len Len del array
+ * \return int retorna -1 si falla y 0 si puede asignar bien.
  */
 int initCensistas(Censista *list, int len) {
 	int retorno;
@@ -26,8 +25,8 @@ int initCensistas(Censista *list, int len) {
 }
 
 /** \brief carga en una lista de censistas existentes los valores tomados en la primer posicion libre.
- * \param censistas Censista *
- * \param len int
+ * \param censistas Censista * puntero al array de censistas
+ * \param len int largo del array.
  * \retorno int Retorna -1 si no pudo cargar o fallo una validacion 0 si esta bien.
  */
 int agregarCensista(Censista *censistas, int len) {
@@ -39,7 +38,6 @@ int agregarCensista(Censista *censistas, int len) {
 	int auxEdad;
 	int auxDia;
 	int auxMes;
-
 	char auxCalle[51];
 	int auxAltura;
 
@@ -47,8 +45,8 @@ int agregarCensista(Censista *censistas, int len) {
 
 	if (censistas != NULL && len > 0 ) {
 		if((indiceVacio = findFreeIndex(censistas, len))!=-1){
-			if(getString(auxName,"Ingrese el nombre del censista:\n","Por favor ingrese un nombre valido conformado de letras y espacios de ser necesarios.\n",2)==0 && getString(auxLastName,"Ingrese el apellido del censista:\n","Por favor ingrese un nombre valido conformado de letras y espacios de ser necesarios.\n",2)==0 && utn_getInt(&anioNacimiento, "Indique el año de nacimiento del censista", "Error", 1960,2004,2)== 0 &&
-					utn_getInt(&auxDia, "Indique el dia de nacimiento del censista (1 al 31)", "Error", 1,31,2)== 0 && utn_getInt(&auxMes, "Indique el mes de nacimiento del censista (1 al 12)", "Error", 1,12,2)== 0 && getString(auxCalle,"Ingrese la calle donde vive el censador:\n","Por favor ingrese un nombre valido conformado de letras y espacios de ser necesarios.\n",2) == 0 && utn_getInt(&auxAltura, "Indique la altura.", "Error", 1,20000,2)== 0 &&
+			if(getString(auxName,"Ingrese el nombre del censista:\n","Por favor ingrese un nombre valido conformado de letras y espacios de ser necesarios.\n",2)==0 && getString(auxLastName,"Ingrese el apellido del censista:\n","Por favor ingrese un nombre valido conformado de letras y espacios de ser necesarios.\n",2)==0 && utn_getInt(&anioNacimiento, "Indique el año de nacimiento del censista", "Error", 1957,2004,2)== 0 &&
+					utn_getInt(&auxDia, "Indique el dia de nacimiento del censista (1 al 31)", "Error", 1,31,2)== 0 && utn_getInt(&auxMes, "Indique el mes de nacimiento del censista (1 al 12)", "Error", 1,12,2)== 0 && getString(auxCalle,"Ingrese la calle donde vive el censista:\n","Por favor ingrese un nombre valido conformado de letras y espacios de ser necesarios.\n",2) == 0 && utn_getInt(&auxAltura, "Indique la altura.", "Error", 1,20000,2)== 0 &&
 					utn_getInt(&auxEdad, "Indique la edad del censista: \n", "Error", 18,65,2)==0){
 				censistas[indiceVacio].datosNacimiento.anioNacimiento = anioNacimiento;
 				censistas[indiceVacio].datosNacimiento.diaNacimiento = auxDia;
@@ -83,11 +81,11 @@ int agregarCensista(Censista *censistas, int len) {
 	return retorno;
 }
 
-/** \brief find a Censista by Id en returns the index position in array.*
- * \param list Censista*
- * \param len int
- * \param id int
- * \return Return passenger index position or (-1) if [Invalid length or NULL pointer received or passenger not found]
+/** \brief Busca en el array de censistas por id y retorna el indice de su posicion.
+ * \param list Censista* puntero al array de censistas
+ * \param len int largo del array.
+ * \param id int Id a encontrar.
+ * \return Retorna el indice del pasajero o -1 si falla o no lo encunetra
  *
  */
 int findCensistaById(Censista *list, int len, int id) {
@@ -96,13 +94,8 @@ int findCensistaById(Censista *list, int len, int id) {
 
 	if (list != NULL && len > 0 && id > 0) {
 		for (int i = 0; i < len; i++) {
-
-
 			if (list[i].idCensista == id && list[i].isEmpty == 0) {
-
 				retorno = i;
-
-
 				break;
 			}
 		}
@@ -110,12 +103,12 @@ int findCensistaById(Censista *list, int len, int id) {
 	return retorno;
 }
 
-/** \brief Remove a Censista by Id (put isEmpty Flag in 1)
+/** \brief Deja el censista en estado INACTIVO.
  *
- * \param list Censista*
- * \param len int
- * \param id int
- * \return int Return (-1) if Error [Invalid length or NULL pointer or if can't find a passenger] - (0) if Ok
+ * \param list Censista* puntero al array de censistas.
+ * \param len int largo del array.
+ * \param id int Id a encontrar.
+ * \return int Retorna -1 si hay error o 0si puede cambiar el estado del censista.
  *
  */
 
@@ -220,50 +213,59 @@ int sortPassengersByName(Censista *list, int len, int order) {
 }
 */
 
-/** \brief print the content of passengers array
+/** \brief Imprime el contenido en el array de censistas.
  *
- * \param list Censista*
- * \param length int
- * \return int
- *
+ * \param list Censista* puntero al array de censistas
+ * \param length int largo del array.
  */
-int printCensistas(Censista *censistas, int length) {
-char estadoAux[9];
+void printCensistas(Censista *censistas, int length) {
+char estadoAux[12];
 
 	if (censistas != NULL && length > 0) {
-		printf("\n___________________________________________________________________________________________");
-		printf("\nNOMBRE         APELLIDO        FECHA NAC  DIRECCION                 ESTADO      EDAD  ID   ");
-		printf("\n___________________________________________________________________________________________");
-		for (int i = 0; i < length; i++) {
-			switch(censistas[i].estadoCensista){
-			case LIBERADO:
+		if(hayCensista(censistas, length) == 1){
+
+
+			printf("\n___________________________________________________________________________________________");
+			printf("\nNOMBRE         APELLIDO        FECHA NAC  DIRECCION                 ESTADO      EDAD  ID   ");
+			printf("\n___________________________________________________________________________________________");
+
+			for (int i = 0; i < length; i++) {
+				switch(censistas[i].estadoCensista){
+				case LIBERADO:
 					strncpy(estadoAux, "LIBERADO",sizeof(estadoAux));
-				break;
-			case ACTIVO:
+					break;
+				case ACTIVO:
 					strncpy(estadoAux, "ACTIVO",sizeof(estadoAux));
-				break;
-			case INACTIVO:
+					break;
+				case INACTIVO:
 					strncpy(estadoAux,"INACTIVO",sizeof(estadoAux));
-				break;
+					break;
+				}
+				if (censistas[i].isEmpty == 0) {
+					printf(
+							"\n%-15s%-15s %-2.i/%-2.i/%-4.i %-20s %-5i %-9s   %-2i    %-5i\n\n",
+							censistas[i].name, censistas[i].lastName, censistas[i].datosNacimiento.diaNacimiento,censistas[i].datosNacimiento.mesNacimiento,censistas[i].datosNacimiento.anioNacimiento,
+							censistas[i].direccionCensista.calle,censistas[i].direccionCensista.altura,estadoAux,censistas[i].edadCensista,censistas[i].idCensista);
+				}
 			}
-			if (censistas[i].isEmpty == 0) {
-				printf(
-						"\n%-15s%-15s %-2.i/%-2.i/%-4.i %-20s %i %-9s   %-2i    %-5i\n\n",
-						censistas[i].name, censistas[i].lastName, censistas[i].datosNacimiento.diaNacimiento,censistas[i].datosNacimiento.mesNacimiento,censistas[i].datosNacimiento.anioNacimiento,
-						censistas[i].direccionCensista.calle,censistas[i].direccionCensista.altura,estadoAux,censistas[i].edadCensista,censistas[i].idCensista);
-			}
+			mensajeGenerico("Presione una tecla para continuar...\n");
+			fflush(stdin);
+			getchar();
+		}
+		else{
+			printf("Debe cargar al menos un censista para acceder a esta opcion.\n");
 		}
 	}
-	return 0;
+
 }
 
 
 
-/// @brief Finds a free index in the array of censistas
+/// @brief Encuentra un indice libre en el array de censistas.
 ///
-/// @param list Censista*
-/// @param len int
-/// @return int Return (-1) if Error [Invalid length or NULL pointer or if can't find a censista] - free index if Ok
+/// @param list Censista* puntero al array de censistas
+/// @param len int largo del array.
+/// @return int Retorna -1 si hay error - un indice vacio si sale bien.
 int findFreeIndex(Censista *list, int len) {
 	int retorno;
 	retorno = -1;
@@ -281,8 +283,8 @@ int findFreeIndex(Censista *list, int len) {
 
 /// @brief Verifica si hay al menos un censista cargado en el array de censistas.
 ///
-/// @param list Censista*
-/// @param len int
+/// @param list Censista* puntero al array de censistas.
+/// @param len int largo del array.
 /// @return int Retorna (-1) si tiene error o no puede encontrar un censista - 1 si al menos hay uno.
 int hayCensista(Censista *list, int len) {
 	int retorno;
@@ -300,22 +302,15 @@ int hayCensista(Censista *list, int len) {
 }
 
 
-/// @brief Modifica un campo del pasajero indicando por el usuario.En caso de modificar el estado del vuelo
-/// retorna por puntero una flag en 1 la cual es usada para modificar el estado de vuelo y el codigo de vuelo
-/// en la estructura de vuelos.
+/// @brief Modifica un campo del censista indicando por el usuario.
 ///
-/// @param list Censista
-/// @param len int
-/// @param id int
-/// @param flyCode Codigo de vuelo retornado para la modificacion de la estructura de vuelos.
-/// @param statusFlight Estado de vuelo retornado para la modificacion de la estructura de vuelos.
-/// @param modificoVuelo Flag retornado para la modificacion de la estructura de vuelos.
-/// @return int Retorna (-1) si tiene error  - 1 si pudo realizar los cambios correctamente.
+/// @param list Censista * puntero al array de censistas.
+/// @param len int largo del array.
+/// @return int Retorna (-1) si tiene error  - 0 si pudo realizar los cambios correctamente.
 
 int modificarCensista(Censista *list, int len){
 	int retorno = -1;
 	int idAux;
-
 	int opcion;
 	int opcionSubMenu;
 	int opcionSubMenu2;
@@ -334,7 +329,6 @@ int modificarCensista(Censista *list, int len){
 			if(utn_getInt(&idAux,"Ingrese el id del censista a modificar:\n","Error ingrese un valor valido\n",1000,5000,2)==0){
 				if(findCensistaById(list, len, idAux) != -1 ) {
 					indiceAModificar = findCensistaById(list, len, idAux);
-
 					do {
 						if (utn_getInt(&opcion,
 							"¿Que desea modificar?\n\n1)Nombre\n\n2)Apellido\n\n3)Datos de nacimiento\n\n4)Edad de censista\n\n5)Datos sobre la direccion del censista.\n\n6)Volver al menu principal",
@@ -374,7 +368,7 @@ int modificarCensista(Censista *list, int len){
 									}
 								break;
 							case 2:
-								if(utn_getInt(&mesNacimientoAux,"Ingrese el nuevo mes de nacimiento: \n", "error",1, 31, 2) == 0){
+								if(utn_getInt(&mesNacimientoAux,"Ingrese el nuevo mes de nacimiento: \n", "error",1, 12, 2) == 0){
 									list[indiceAModificar].datosNacimiento.mesNacimiento = mesNacimientoAux;
 									mensajeGenerico("Mes de nacimiento actualizado.\n");
 									retorno = 0;
@@ -384,7 +378,7 @@ int modificarCensista(Censista *list, int len){
 									}
 								break;
 							case 3:
-								if(utn_getInt(&diaNacimientoAux,"Ingrese el nuevo mes de nacimiento: \n","error",1, 31, 2) == 0){
+								if(utn_getInt(&diaNacimientoAux,"Ingrese el nuevo dia de nacimiento: \n","error",1, 31, 2) == 0){
 									list[indiceAModificar].datosNacimiento.diaNacimiento = diaNacimientoAux ;
 									mensajeGenerico("Dia de nacimiento actualizado.\n");
 									retorno = 0;
@@ -460,7 +454,7 @@ int modificarCensista(Censista *list, int len){
 }
 
 
-/// @brief Genera una id autoinrecemental.
+/// @brief Genera una id autoincremental.
 ///
 /// @return Retorna el numero de id.
 int censistaId(void) {
@@ -470,6 +464,10 @@ int censistaId(void) {
 }
 
 
+/** @brief Carga 5 censistas de manera automatica en las primeras
+ * 5 posiciones del array de censistas.
+ *
+ */
 void cargaForzadaCensistas(Censista * list)
 {
 		strncpy(list[0].name, "Juan",sizeof(list[0].name));
@@ -538,7 +536,13 @@ void cargaForzadaCensistas(Censista * list)
 		list[4].idZona = -1;
 }
 
-
+/** @brief Busca en el array de censistas el primer censista en estado
+ * LIBERADO
+ * @param list Censista * puntero al array de censistas.
+ * @param len int largo del array.
+ * @return Retorna la posicion del censista liberado si lo encuentra
+ * o -1 si no hay ninguno que este liberado.
+ */
 int encontrarCensistaLiberado(Censista *list, int len) {
 	int retorno;
 	retorno = -1;
@@ -554,6 +558,14 @@ int encontrarCensistaLiberado(Censista *list, int len) {
 	return retorno;
 }
 
+/** @brief Busca en el array de censistas uno que coincida con el id
+ * que recibe por parametro.
+ * @param list Censista * puntero al array de censistas.
+ *@param len int largo del array.
+ *@param id que busca en el array de censistas.
+ *@return Retorna la posicion (indice) del censista que coincide
+ * o -1 si no lo encontro.
+ */
 int encontrarCensistaPorIdZona(Censista *cencistas, int len, int id){
 	int retorno = -1;
 
@@ -567,6 +579,14 @@ int encontrarCensistaPorIdZona(Censista *cencistas, int len, int id){
 	return retorno;
 }
 
+/** @brief Verifica en el array de censistas si hay uno que coincida con el
+ * id y ademas este en estado ACTIVO.
+ * @param list Censista * puntero al array de censistas.
+ * @param len int largo del array.
+ * @param idZona Id que busca en el array de censistas.
+ *  *@return Retorna la posicion (indice) del censista que coincide
+ * o -1 si no lo encontro.
+ */
 int verificarCensista(Censista *censistas, int len, int idZona){
 	int retorno = -1;
 
@@ -582,15 +602,3 @@ int verificarCensista(Censista *censistas, int len, int idZona){
 	return retorno;
 }
 
-int encontrarCensistaActivoEnZona(Censista *censista, int len, int id){
-	int retorno = -1;
-
-		if(censista != NULL && len > 0){
-			for(int i = 0; i<len;i++){
-				if(censista[i].isEmpty==0 && censista[i].idZona == id){
-					retorno = i;
-				}
-			}
-		}
-	return retorno;
-}

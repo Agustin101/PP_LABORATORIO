@@ -22,13 +22,13 @@ int main(void) {
 		if(utn_getInt(&opcionDelMenu,"Indique la opcion del menu\n1)Cargar censista\n2)Modificar censista\n3)Dar de baja censista\n4)Cargar zona\n5)Asignar zona a censar\n6)Carga de datos:\n7)Mostrar censistas:\n8)Mostrar zonas\n9)Carga forzada de censistas\n10)Carga forzada de zonas\n11)opcion a descubrir en el futuro\n12)Salir", "Indique una opcion valida", 1, 12,2)== 0){
 			switch(opcionDelMenu){
 			case 1:
-				agregarCensista(censistas, LEN_CEN);
+					agregarCensista(censistas, LEN_CEN);
 				break;
 			case 2:
-				modificarCensista(censistas, LEN_CEN);
+					modificarCensista(censistas, LEN_CEN);
 				break;
 			case 3:
-				removeCensista(censistas,LEN_CEN);
+					removeCensista(censistas,LEN_CEN);
 				break;
 			case 4:
 				if (utn_getInt(&eleccionlocalidad, "¿Que localidad desea cargar?\n1)Lanus\n2)Avellaneda\n3)Gerli\n4)Alsina\n5)Barracas", "Error", 1,6,2)==0){
@@ -55,23 +55,10 @@ int main(void) {
 					asignarZonaACensar(censistas, LEN_CEN,zonasACensar, LEN_ZONAS);
 				break;
 			case 6:
-				if(hayCensista(censistas, LEN_CEN) == 1 && hayZona(zonasACensar,LEN_ZONAS) == 1 ){
-				cargaDeDatos(zonasACensar,LEN_CEN,censistas,LEN_ZONAS);
-				}
-				else{
-					printf("Para acceder a la opcion debe cargar almenos una zona y un censista");
-				}
+					cargaDeDatos(zonasACensar,LEN_CEN,censistas,LEN_ZONAS);
 				break;
 			case 7:
-				if(hayCensista(censistas, LEN_CEN) == 1){
 					printCensistas(censistas, LEN_CEN);
-					mensajeGenerico("Presione una tecla para continuar...\n");
-					fflush(stdin);
-					getchar();
-				}
-				else{
-					printf("Es necesario que se cargue un censista para acceder a esta opcion \n");
-				}
 				break;
 			case 8:
 				printZonasyCensistas(zonasACensar, LEN_CEN, censistas);

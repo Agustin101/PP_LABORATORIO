@@ -43,36 +43,40 @@ int cargaDeDatos(zonaCenso * zonas, int lenCensistas, Censista * censistas, int 
 	int indiceCensistaACambiar;
 
 	    if(censistas != NULL && lenCensistas > 0 && zonas != NULL && lenZonas > 0){
-
-	    	if(utn_getInt(&idZonaAFinalizar, "Ingrese el id de la zona a finalizar:\n", "Error valor invalido.\n",2000,5000,2)==0){
-		        if(encontrarZonaPorId(zonas,lenZonas,idZonaAFinalizar)!=-1){
-		        	if((indiceZonaVerificada = verificarZona(zonas,lenZonas,idZonaAFinalizar))!=-1){
-		        		if((indiceCensistaACambiar = verificarCensista(censistas,lenCensistas,idZonaAFinalizar)) != -1){
-		        			if(utn_getInt(&censadosInSitu, "¿Cuantas personas censo de manera presencial?", "Ingrese un valor valido mayor o igual a 0.",0,10000,2)==0 && utn_getInt(&censadosVirtual, "¿Cuantas personas censo de manera virtual?", "Ingrese un valor valido mayor o igual a 0.",0,100000,2)==0 && utn_getInt(&ausentes, "¿Cuantas personas estuvieron ausentes?", "Ingrese un valor valido mayor o igual a 0.",0,10000,2)==0){
-		        				zonas[indiceZonaVerificada].estadoZona = FINALIZADO;
-		        				zonas[indiceZonaVerificada].censadosInSitu = censadosInSitu;
-		        				zonas[indiceZonaVerificada].censadosVirtual= censadosVirtual;
-		        				zonas[indiceZonaVerificada].ausentes = ausentes;
-		        				zonas[indiceZonaVerificada].idCensistaAsignado = censistas[indiceCensistaACambiar].idCensista;
-		        				censistas[indiceCensistaACambiar].estadoCensista = LIBERADO;
-		        				retorno = 0;
-		        				printf("\n*El censo en la zona finalizo correctamente.*\n");
-		        			}
-		        			else{
+	    	if(hayCensista(censistas, lenCensistas) == 1 && hayZona(zonas,lenZonas) == 1 ){
+	    		if(utn_getInt(&idZonaAFinalizar, "Ingrese el id de la zona a finalizar:\n", "Error valor invalido.\n",2000,5000,2)==0){
+	    			if(encontrarZonaPorId(zonas,lenZonas,idZonaAFinalizar)!=-1){
+	    				if((indiceZonaVerificada = verificarZona(zonas,lenZonas,idZonaAFinalizar))!=-1){
+	    					if((indiceCensistaACambiar = verificarCensista(censistas,lenCensistas,idZonaAFinalizar)) != -1){
+	    						if(utn_getInt(&censadosInSitu, "¿Cuantas personas censo de manera presencial?", "Ingrese un valor valido mayor o igual a 0.",0,10000,2)==0 && utn_getInt(&censadosVirtual, "¿Cuantas personas censo de manera virtual?", "Ingrese un valor valido mayor o igual a 0.",0,100000,2)==0 && utn_getInt(&ausentes, "¿Cuantas personas estuvieron ausentes?", "Ingrese un valor valido mayor o igual a 0.",0,10000,2)==0){
+	    							zonas[indiceZonaVerificada].estadoZona = FINALIZADO;
+	    							zonas[indiceZonaVerificada].censadosInSitu = censadosInSitu;
+	    							zonas[indiceZonaVerificada].censadosVirtual= censadosVirtual;
+	    							zonas[indiceZonaVerificada].ausentes = ausentes;
+	    							zonas[indiceZonaVerificada].idCensistaAsignado = censistas[indiceCensistaACambiar].idCensista;
+	    							censistas[indiceCensistaACambiar].estadoCensista = LIBERADO;
+	    							retorno = 0;
+	    							printf("\n*El censo en la zona finalizo correctamente.*\n");
+	    						}
+	    						else{
 		        				printf("La carga de datos de la zona fallo.\n");
-		        			}
-		        		}
-		        		else{
+	    						}
+	    					}
+	    					else{
 		        			printf("\nLa zona aun no fue censada.\n");
+	    					}
+	    				}
+	    				else{
+	    					printf("El id ingresado no corresponde con ninguna zona en estado pendiente.");
 		        		}
 					}
 		        	else{
-		        		printf("El id ingresado no corresponde con ninguna zona en estado pendiente.");
+		        		mensajeGenerico("El id ingresado no corresponde a ninguna zona cargada.\n");
 		        	}
-				}
-		        else{
-		        	mensajeGenerico("El id ingresado no corresponde a ninguna zona cargada.\n");
-		        }
+	    		}
+	    	}
+	    	else{
+	    		printf("Debe al menos un censista y una zona para acceder a esta opcion.\n");
 	    	}
 	    }
 

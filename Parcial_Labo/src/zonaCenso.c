@@ -8,7 +8,11 @@
 #include "zonaCenso.h"
 
 
-
+/** \brief Inicia todas las posiciones del array con la flag isEmpty en 1
+ * \param list zonaCenso* puntero al array de censos
+ * \param len Len del array
+ * \return int retorna -1 si falla y 0 si puede asignar bien.
+ */
 int initZonas(zonaCenso *list, int len) {
 	int retorno;
 	retorno = -1;
@@ -24,7 +28,13 @@ int initZonas(zonaCenso *list, int len) {
 }
 
 
-
+/** \brief Busca en el array de censos por id y retorna el indice de su posicion.
+ * \param list zonaCenso* puntero al array de censos
+ * \param len int largo del array.
+ * \param id int Id a encontrar.
+ * \return Retorna el indice del pasajero o -1 si falla o no lo encunetra
+ *
+ */
 int encontrarZonaPorId(zonaCenso *zonas, int len, int id){
 	int retorno = -1;
 
@@ -39,6 +49,12 @@ int encontrarZonaPorId(zonaCenso *zonas, int len, int id){
 	return retorno;
 }
 
+/** \brief carga en una lista de zonas a censar existentes los
+ * valores tomados en la primer posicion libre.
+ * \param zonas zonaCenso* puntero al array de censos
+ * \param len int largo del array.
+ * \retorno int Retorna -1 si no pudo cargar o fallo una validacion 0 si esta bien.
+ */
 int cargarZona(zonaCenso * zonas, int len, int localidad){
 	int retorno = -1;
 	char auxCalles[4][51];
@@ -126,6 +142,11 @@ int cargarZona(zonaCenso * zonas, int len, int localidad){
 	return retorno;
 }
 
+/// @brief Encuentra un indice libre en el array de censistas.
+///
+/// @param list Censista* puntero al array de censistas
+/// @param len int largo del array.
+/// @return int Retorna -1 si hay error - un indice vacio si sale bien.
 int encontrarPosicionLibre(zonaCenso *zonas, int len) {
 	int retorno;
 	retorno = -1;
@@ -177,6 +198,10 @@ int printZonaCensar(zonaCenso * zonas, int length){
 	return retorno;
 }
 
+/** @brief Carga 8 zonas a censar de manera automatica en las primeras
+ * 8 posiciones del array de zonas.
+ *
+ */
 void cargaForzadaZona(zonaCenso * zonas)
 {
 		zonas[0].isEmpty = 0;
@@ -221,7 +246,7 @@ void cargaForzadaZona(zonaCenso * zonas)
 
 		zonas[3].isEmpty = 0;
 		zonas[3].estadoZona = PENDIENTE;
-		zonas[3].idZona = zonaId();;
+		zonas[3].idZona = zonaId();
 		strncpy(zonas[3].calles[0], "Mitre",sizeof(zonas[3].calles[0]));
 		strncpy(zonas[3].calles[1], "Alsina",sizeof(zonas[3].calles[1]));
 		strncpy(zonas[3].calles[2], "Lavalle",sizeof(zonas[3].calles[2]));
@@ -234,7 +259,7 @@ void cargaForzadaZona(zonaCenso * zonas)
 
 		zonas[4].isEmpty = 0;
 		zonas[4].estadoZona = PENDIENTE;
-		zonas[4].idZona = zonaId();;
+		zonas[4].idZona = zonaId();
 		strncpy(zonas[4].calles[0], "Carabelas",sizeof(zonas[4].calles[0]));
 		strncpy(zonas[4].calles[1], "Donovan",sizeof(zonas[4].calles[1]));
 		strncpy(zonas[4].calles[2], "Cangallo",sizeof(zonas[4].calles[2]));
@@ -291,11 +316,18 @@ void cargaForzadaZona(zonaCenso * zonas)
 ///
 /// @return Retorna el numero de id.
 int zonaId(void) {
+
 	static int id = 1999;
 	id++;
 	return id;
 }
 
+
+/// @brief Verifica si hay al menos una zona cargada en el array de zonas.
+///
+/// @param zonas zonaCenso* puntero al array de zonas.
+/// @param len int largo del array.
+/// @return int Retorna (-1) si tiene error o no puede encontrar un censista - 1 si al menos hay uno.
 int hayZona(zonaCenso *zonas, int len) {
 	int retorno;
 	retorno = 0;
@@ -311,6 +343,13 @@ int hayZona(zonaCenso *zonas, int len) {
 	return retorno;
 }
 
+/** @brief Busca en el array de zonas la primer zona en estado
+ * PENDIENTE
+ * @param zonas zonaCenso* puntero al array de zonas.
+ * @param lenZonas int largo del array.
+ * @return Retorna la posicion de la zona pendiente si la encuentra
+ * o -1 si no hay ninguno que este pendiente.
+ */
 int buscarZonaPendiente(zonaCenso *zonas, int lenZonas){
 	int retorno = -1;
 
@@ -328,7 +367,14 @@ int buscarZonaPendiente(zonaCenso *zonas, int lenZonas){
 	return retorno;
 }
 
-
+/** @brief Verifica en el array de zonas si hay una que coincida con el
+ * id y ademas este en estado PENDIENTE.
+ * @param zonas zonaCenso* puntero al array de zonas.
+ * @param len int largo del array.
+ * @param idZona Id que busca en el array de zonas.
+ *  *@return Retorna la posicion (indice) de la zona que coincide
+ * o -1 si no lo encontro.
+ */
 int verificarZona(zonaCenso *zonas, int len, int id){
 	int retorno = -1;
 
