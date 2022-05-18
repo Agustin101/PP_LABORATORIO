@@ -7,14 +7,13 @@
 
 #include "informes.h"
 
-int printCargaDeDatos(zonaCenso * zonas, int length, Censista * censista){
+void printCargaDeDatos(zonaCenso * zonas, int lenZonas, Censista * censista, int lenCensistas){
 	int retorno = -1;
 
-		if (zonas != NULL && length > 0 && censista != NULL) {
-
-			for (int i = 0; i < length; i++) {
+		if (zonas != NULL && lenZonas > 0 && censista != NULL && lenCensistas > 0) {
+			for (int i = 0; i < lenZonas; i++) {
 				if (zonas[i].isEmpty == 0 && zonas[i].estadoZona == PENDIENTE) {
-					for(int j = 0; j < length; j++){
+					for(int j = 0; j < lenCensistas; j++){
 						if(zonas[i].idZona == censista[j].idZona && censista[j].estadoCensista == ACTIVO){
 							printf("\n__________________________________________________________________________________________");
 							printf("\nZONA  LOCALIDAD      CALLES              NOMBRE CEN     APELLIDO CEN                      ");
@@ -28,9 +27,6 @@ int printCargaDeDatos(zonaCenso * zonas, int length, Censista * censista){
 				}
 			}
 		}
-
-
-	return retorno;
 }
 
 int cargaDeDatos(zonaCenso * zonas, int lenCensistas, Censista * censistas, int lenZonas){
@@ -173,7 +169,7 @@ int asignarZonaACensar(Censista* censistas, int lenCensista,zonaCenso* zonas, in
 int printZonasyCensistas(zonaCenso * zonas, int length, Censista * censistas){
 	int retorno = -1;
 	char auxLocalidad[51];
-	char auxEstado[11];
+	char auxEstado[15];
 
 		if (zonas != NULL && length > 0 && censistas != NULL) {
 			for (int i = 0; i < length; i++) {

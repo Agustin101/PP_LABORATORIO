@@ -12,7 +12,7 @@
 #include "zonaCenso.h"
 #include "bibliotecaESDeDatos.h"
 
-int printCargaDeDatos(zonaCenso * zonas, int length, Censista * censista);
+void printCargaDeDatos(zonaCenso * zonas, int lenZonas, Censista * censista, int lenCensistas);
 int asignarZonaACensar(Censista* censistas, int lenCensista,zonaCenso* zonas, int lenZonas);
 int cargaDeDatos(zonaCenso * zonas, int lenCensistas, Censista * censistas, int lenZonas);
 int printZonasyCensistas(zonaCenso * zonas, int length, Censista * censistas);
