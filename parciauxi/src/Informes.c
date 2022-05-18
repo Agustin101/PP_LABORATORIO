@@ -39,13 +39,15 @@ int cargaDeDatos(zonaCenso * zonas, int lenCensistas, Censista * censistas, int 
 	int censadosInSitu;
 	int censadosVirtual;
 	int ausentes;
+	int retornoZona;
 	int indiceZonaVerificada;
 	int indiceCensistaACambiar;
 
 	    if(censistas != NULL && lenCensistas > 0 && zonas != NULL && lenZonas > 0){
 
 	    	if(utn_getInt(&idZonaAFinalizar, "Ingrese el id de la zona a finalizar:\n", "Error valor invalido.\n",2000,5000,2)==0){
-		        if(encontrarZonaPorId(zonas,lenZonas,idZonaAFinalizar)!=-1){
+		        if((retornoZona = encontrarZonaPorId(zonas,lenZonas,idZonaAFinalizar))!=-1){
+
 		        	if((indiceZonaVerificada = verificarZona(zonas,lenZonas,idZonaAFinalizar))!=-1){
 		        		if((indiceCensistaACambiar = verificarCensista(censistas,lenCensistas,idZonaAFinalizar)) != -1){
 		        			if(utn_getInt(&censadosInSitu, "¿Cuantas personas censo de manera presencial?", "Ingrese un valor valido mayor o igual a 0.",0,10000,2)==0 && utn_getInt(&censadosVirtual, "¿Cuantas personas censo de manera virtual?", "Ingrese un valor valido mayor o igual a 0.",0,100000,2)==0 && utn_getInt(&ausentes, "¿Cuantas personas estuvieron ausentes?", "Ingrese un valor valido mayor o igual a 0.",0,10000,2)==0){
@@ -53,17 +55,15 @@ int cargaDeDatos(zonaCenso * zonas, int lenCensistas, Censista * censistas, int 
 		        				zonas[indiceZonaVerificada].censadosInSitu = censadosInSitu;
 		        				zonas[indiceZonaVerificada].censadosVirtual= censadosVirtual;
 		        				zonas[indiceZonaVerificada].ausentes = ausentes;
-		        				zonas[indiceZonaVerificada].idCensistaAsignado = censistas[indiceCensistaACambiar].idCensista;
 		        				censistas[indiceCensistaACambiar].estadoCensista = LIBERADO;
 		        				retorno = 0;
-		        				printf("\n*El censo en la zona finalizo correctamente.*\n");
 		        			}
 		        			else{
 		        				printf("La carga de datos de la zona fallo.\n");
 		        			}
 		        		}
 		        		else{
-		        			printf("\nLa zona aun no fue censada.\n");
+		        			printf("\nLa zona ya esta siendo censada.\n");
 		        		}
 					}
 		        	else{
@@ -71,56 +71,103 @@ int cargaDeDatos(zonaCenso * zonas, int lenCensistas, Censista * censistas, int 
 		        	}
 				}
 		        else{
-		        	mensajeGenerico("El id ingresado no corresponde a ninguna zona cargada.\n");
+		        	mensajeGenerico("El id ingresado no corresponde a ninguna zona activa.\n");
 		        }
 	    	}
 	    }
 
 	return retorno;
 }
+/*
+int asignarZonaACensar(Censista* censistas, int lenCensista,zonaCenso* zonas, int lenZonas){
 
-//int asignarZonaACensar(Censista* censistas, int lenCensista,zonaCenso* zonas, int lenZonas){
-//	int retorno = -1;
-//	int idZonaAux;
-//	int indexLibre;
-//	int retornoZona;
-//
-//	if(censistas != NULL && lenCensista > 0 &&  zonas != NULL && lenZonas > 0){
-//		if ((indexLibre = encontrarCensistaLiberado(censistas, lenCensista)) != -1) {
-//			if(buscarZonaPendiente(zonas, lenZonas) != -1) {
-//				if (utn_getInt(&idZonaAux,"\nIngrese el ID de la zona a censar: ","Ingrese un id valido.", 2000, 5999, 5) == 0) {
-//					if((retornoZona= verificarZona(zonas,lenZonas,idZonaAux))!=-1){
-//						printf("\n indice de la zona a censar %d", retornoZona);
-//						if(verificarCensista(censistas,lenCensista,idZonaAux)==-1){
-//							printf("\n indice del censista %d", indexLibre);
-//							censistas[indexLibre].idZona = idZonaAux;
-//							zonas[retornoZona].idCensistaAsignado = censistas[indexLibre].idCensista;
-//							censistas[indexLibre].estadoCensista = ACTIVO;
-//							printf("\n-La zona sera censada por: %s %s-\n",
-//									censistas[indexLibre].name,
-//									censistas[indexLibre].lastName);
-//							printf("\nLa zona fue asignada a un censista responsable correctamente.\n");
-//							retorno = 0;
-//						}
-//						else{
-//							printf("\n La zona ya esta siendo censada en este momento.\n");
-//						}
-//					}
-//					else{
-//						printf("El id no corresponde a ninguna zona pendiente. \n");
-//					}
-//				}
-//			}
-//			else{
-//				printf("No hay zonas pendientes para censar.\n");
-//			}
-//		}
-//		else{
-//			printf("No hay censistas disponibles para asignar.");
-//		}
-//	}
-//	return retorno;
-//}
+	int retorno = -1;
+	int idZona;
+	int indexLibre;
+	int retornoZona;
+
+	    if(censistas != NULL && lenCensista > 0 && zonas != NULL && lenZonas ){
+
+	    	printZonaCensar(zonas,lenZonas);
+	    	fflush(stdin);
+		    	if(utn_getInt(&idZona, "Ingrese el id de la zona a censar:\n", "Error valor invalido.\n",2000,99999,2)==0){
+		    		printf("entre 81");
+			        if(encontrarZonaPorId(zonas,lenZonas,idZona)!=-1){
+			        	retornoZona = encontrarZonaPorId(zonas,lenZonas,idZona);
+			        	printf("entre 83 % d",retornoZona);
+						if(zonas[retornoZona].estadoZona == PENDIENTE ){
+							printf("entre 85");
+							printf("%d",idZona);
+							if(verificarCensista(censistas,lenCensista, idZona) == 0){
+
+								printf("entre 87");
+								printf("La zona ya esta siendo censada");
+							}
+							else{
+								printf("entre 91");
+								indexLibre = encontrarCensistaLiberado(censistas, lenCensista);
+								censistas[indexLibre].idZona = idZona;
+								censistas[indexLibre].estadoCensista = ACTIVO;
+								printf("\nLa zona ha sido asignada a un censista responsable correctamente.\n");
+								retorno = 0;
+							}
+						}
+					}
+			        else{
+			        	printf("El id ingresado no corresponde a ninguna zona activa.\n");
+			        }
+		    	}
+	    }
+
+
+	    return retorno;
+}
+*/
+
+/*
+int asignarZonaACensar(Censista* censistas, int lenCensista,zonaCenso* zonas, int lenZonas){
+	int retorno = -1;
+	int idZonaAux;
+	int indexLibre;
+	int retornoZona;
+
+	if(censistas != NULL && lenCensista > 0 &&  zonas != NULL && lenZonas > 0){
+		if ((indexLibre = encontrarCensistaLiberado(censistas, lenCensista)) != -1) {
+			if(buscarZonaPendiente(zonas, lenZonas) != -1) {
+				if (utn_getInt(&idZonaAux,"\nIngrese el ID de la zona a censar: ","Ingrese un id valido.", 2000, 5999, 5) == 0) {
+					if((retornoZona= encontrarZonaPorId(zonas,lenZonas,idZonaAux))!=-1){
+						printf("\n indice de la zona a censar %d", retornoZona);
+						if(verificarCensista(censistas,lenCensista,idZonaAux)==-1){
+							printf("\n indice del censista %d", indexLibre);
+							censistas[indexLibre].idZona = idZonaAux;
+							zonas[retornoZona].idCensistaAsignado = censistas[indexLibre].idCensista;
+							censistas[indexLibre].estadoCensista = ACTIVO;
+							printf("\n-La zona sera censada por: %s %s-\n",
+									censistas[indexLibre].name,
+									censistas[indexLibre].lastName);
+							printf("\nLa zona fue asignada a un censista responsable correctamente.\n");
+							retorno = 0;
+						}
+						else{
+							printf("\n La zona ya esta siendo censada en este momento.\n");
+						}
+					}
+					else{
+						printf("El id no corresponde a ninguna zona pendiente. \n");
+					}
+				}
+			}
+			else{
+				printf("No hay zonas pendientes para censar.\n");
+			}
+		}
+		else{
+			printf("No hay censistas disponibles para asignar.");
+		}
+	}
+	return retorno;
+}
+*/
 
 int asignarZonaACensar(Censista* censistas, int lenCensista,zonaCenso* zonas, int lenZonas){
 	int retorno = -1;
@@ -129,8 +176,8 @@ int asignarZonaACensar(Censista* censistas, int lenCensista,zonaCenso* zonas, in
 	int retornoZona;
 
 	if(censistas != NULL && lenCensista > 0 &&  zonas != NULL && lenZonas > 0){
-		if (buscarZonaPendiente(zonas, lenZonas) != -1) {
-			if((indexLibre = encontrarCensistaLiberado(censistas, lenCensista)) != -1) {
+		if ((indexLibre = encontrarCensistaLiberado(censistas, lenCensista)) != -1) {
+			if(buscarZonaPendiente(zonas, lenZonas) != -1) {
 				if (utn_getInt(&idZonaAux,"\nIngrese el ID de la zona a censar: ","Ingrese un id valido.", 2000, 5999, 5) == 0) {
 					if((retornoZona= verificarZona(zonas,lenZonas,idZonaAux))!=-1){
 						printf("\n indice de la zona a censar %d", retornoZona);
@@ -155,15 +202,22 @@ int asignarZonaACensar(Censista* censistas, int lenCensista,zonaCenso* zonas, in
 				}
 			}
 			else{
-				printf("No hay censistas disponibles para asignar.");
+				printf("No hay zonas pendientes para censar.\n");
 			}
 		}
 		else{
-			printf("No hay zonas pendientes para censar.\n");
+			printf("No hay censistas disponibles para asignar.");
 		}
 	}
 	return retorno;
 }
+
+
+
+
+
+
+
 
 
 int printZonasyCensistas(zonaCenso * zonas, int length, Censista * censistas){

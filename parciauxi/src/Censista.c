@@ -47,7 +47,7 @@ int agregarCensista(Censista *censistas, int len) {
 
 	if (censistas != NULL && len > 0 ) {
 		if((indiceVacio = findFreeIndex(censistas, len))!=-1){
-			if(getString(auxName,"Ingrese el nombre del censista:\n","Por favor ingrese un nombre valido conformado de letras y espacios de ser necesarios.\n",2)==0 && getString(auxLastName,"Ingrese el apellido del censista:\n","Por favor ingrese un nombre valido conformado de letras y espacios de ser necesarios.\n",2)==0 && utn_getInt(&anioNacimiento, "Indique el año de nacimiento del censista", "Error", 1960,2004,2)== 0 &&
+			if(getString(auxName,"Ingrese el nombre del censista:\n","Por favor ingrese un nombre valido conformado de letras y espacios de ser necesarios.\n",2)==0 && getString(auxLastName,"Ingrese el apellido del censista:\n","Por favor ingrese un nombre valido conformado de letras y espacios de ser necesarios.\n",2)==0 && utn_getInt(&anioNacimiento, "Indique el año de nacimiento del censista", "Error", 1960,2002,2)== 0 &&
 					utn_getInt(&auxDia, "Indique el dia de nacimiento del censista (1 al 31)", "Error", 1,31,2)== 0 && utn_getInt(&auxMes, "Indique el mes de nacimiento del censista (1 al 12)", "Error", 1,12,2)== 0 && getString(auxCalle,"Ingrese la calle donde vive el censador:\n","Por favor ingrese un nombre valido conformado de letras y espacios de ser necesarios.\n",2) == 0 && utn_getInt(&auxAltura, "Indique la altura.", "Error", 1,20000,2)== 0 &&
 					utn_getInt(&auxEdad, "Indique la edad del censista: \n", "Error", 18,65,2)==0){
 				censistas[indiceVacio].datosNacimiento.anioNacimiento = anioNacimiento;
@@ -119,33 +119,20 @@ int findCensistaById(Censista *list, int len, int id) {
  *
  */
 
-int removeCensista(Censista *censista, int len) {
+int removeCensista(Censista *censista, int len, int id) {
 	int retorno;
 	int indiceAEliminar;
-	int idCensistaAux;
 	retorno = -1;
 
-	if (censista != NULL && len > 0) {
-		if(hayCensista(censista, len) == 1){
-			if(utn_getInt(&idCensistaAux,"Ingrese el id del censista a eliminar:\n","Error ingrese un id valido.\n",1000,5000,2)==0){
-				if(findCensistaById(censista,len,idCensistaAux)!=-1){
-					indiceAEliminar = findCensistaById(censista,len,idCensistaAux);
-					if (indiceAEliminar != -1 && censista[indiceAEliminar].estadoCensista != ACTIVO) {
-						censista[indiceAEliminar].estadoCensista = INACTIVO;
-						retorno = 0;
-						printf("El censista ahora se encuentra en estado INACTIVO.\n");
-					}
-					else {
-						printf("No puede dar de baja un censista en estado ACTIVO.\n");
-					}
-				}
-				else{
-					printf("El id no corresponde a ningun censista cargado en el sistema.\n");
-				}
-			}
+	if (censista != NULL && len > 0 && id > 0) {
+		indiceAEliminar = findCensistaById(censista, len, id);
+		if (indiceAEliminar != -1 && censista[indiceAEliminar].estadoCensista != ACTIVO) {
+			censista[indiceAEliminar].estadoCensista = INACTIVO;
+			retorno = 0;
+			printf("Censista dado de baja con exito.\n");
 		}
-		else{
-			printf("Para acceder a esta opcion debe haber cargado al menos un censista. \n");
+		else {
+			printf("No puede dar de baja un censista en estado ACTIVO.\n");
 		}
 	}
 	return retorno;
@@ -473,68 +460,68 @@ int censistaId(void) {
 void cargaForzadaCensistas(Censista * list)
 {
 		strncpy(list[0].name, "Juan",sizeof(list[0].name));
-		strncpy(list[0].lastName, "Perez",sizeof(list[0].lastName));
+		strncpy(list[0].lastName, "Perez",sizeof(list[0].name));
 		list[0].idCensista = censistaId();
-		list[0].edadCensista = 49;
+		list[0].edadCensista = 22;
 		list[0].estadoCensista = LIBERADO;
 		list[0].isEmpty = 0;
 		list[0].datosNacimiento.diaNacimiento = 10;
 		list[0].datosNacimiento.mesNacimiento = 9;
-		list[0].datosNacimiento.anioNacimiento = 1973;
-		strncpy(list[0].direccionCensista.calle, "Avenida mitre",sizeof(list[0].direccionCensista.calle));
-		list[0].direccionCensista.altura = 500;
+		list[0].datosNacimiento.anioNacimiento = 2000;
+		strncpy(list[0].direccionCensista.calle, "Avenida mitre",sizeof(list[0].name));
+		list[0].direccionCensista.altura = 2057;
 		list[0].idZona = -1;
 
 		strncpy(list[1].name, "Marcos",sizeof(list[1].name));
-		strncpy(list[1].lastName, "Amarillo",sizeof(list[1].lastName));
+		strncpy(list[1].lastName, "Amarillo",sizeof(list[1].name));
 		list[1].idCensista = censistaId();
-		list[1].edadCensista = 20;
+		list[1].edadCensista = 22;
 		list[1].estadoCensista = LIBERADO;
 		list[1].isEmpty = 0;
-		list[1].datosNacimiento.diaNacimiento = 26;
-		list[1].datosNacimiento.mesNacimiento = 2;
-		list[1].datosNacimiento.anioNacimiento = 2002;
-		strncpy(list[1].direccionCensista.calle, "Donato alvarez",sizeof(list[1].direccionCensista.calle));
+		list[1].datosNacimiento.diaNacimiento = 10;
+		list[1].datosNacimiento.mesNacimiento = 9;
+		list[1].datosNacimiento.anioNacimiento = 2000;
+		strncpy(list[1].direccionCensista.calle, "Futbolin",sizeof(list[1].name));
 		list[1].direccionCensista.altura = 2057;
 		list[1].idZona = -1;
 
 		strncpy(list[2].name, "Pedro",sizeof(list[2].name));
 		strncpy(list[2].lastName, "Diaz",sizeof(list[2].lastName));
 		list[2].idCensista = censistaId();
-		list[2].edadCensista = 29;
+		list[2].edadCensista = 22;
 		list[2].estadoCensista = LIBERADO;
 		list[2].isEmpty = 0;
-		list[2].datosNacimiento.diaNacimiento = 16;
-		list[2].datosNacimiento.mesNacimiento = 3;
-		list[2].datosNacimiento.anioNacimiento = 1993;
-		strncpy(list[2].direccionCensista.calle, "Victor hugo",sizeof(list[2].direccionCensista.calle));
-		list[2].direccionCensista.altura = 1453;
+		list[2].datosNacimiento.diaNacimiento = 10;
+		list[2].datosNacimiento.mesNacimiento = 9;
+		list[2].datosNacimiento.anioNacimiento = 2000;
+		strncpy(list[2].direccionCensista.calle, "tefaltacalle",sizeof(list[2].name));
+		list[2].direccionCensista.altura = 2057;
 		list[2].idZona = -1;
 
-		strncpy(list[3].name, "Juanita",sizeof(list[3].name));
-		strncpy(list[3].lastName, "Lavo",sizeof(list[3].lastName));
+		strncpy(list[3].name, "Estebanio",sizeof(list[3].name));
+		strncpy(list[3].lastName, "Lavo",sizeof(list[3].name));
 		list[3].idCensista = censistaId();
-		list[3].edadCensista = 19;
+		list[3].edadCensista = 22;
 		list[3].estadoCensista = LIBERADO;
 		list[3].isEmpty = 0;
-		list[3].datosNacimiento.diaNacimiento = 30;
-		list[3].datosNacimiento.mesNacimiento = 12;
-		list[3].datosNacimiento.anioNacimiento = 2003;
-		strncpy(list[3].direccionCensista.calle, "belgrano",sizeof(list[3].direccionCensista.calle));
-		list[3].direccionCensista.altura = 652;
+		list[3].datosNacimiento.diaNacimiento = 10;
+		list[3].datosNacimiento.mesNacimiento = 9;
+		list[3].datosNacimiento.anioNacimiento = 2000;
+		strncpy(list[3].direccionCensista.calle, "tefaltacalle",sizeof(list[3].name));
+		list[3].direccionCensista.altura = 2057;
 		list[3].idZona = -1;
 
-		strncpy(list[4].name, "Jorge",sizeof(list[4].name));
-		strncpy(list[4].lastName, "Dotero",sizeof(list[4].lastName));
+		strncpy(list[4].name, "Pepe",sizeof(list[4].name));
+		strncpy(list[4].lastName, "Picapi",sizeof(list[4].name));
 		list[4].idCensista = censistaId();
-		list[4].edadCensista = 31;
+		list[4].edadCensista = 22;
 		list[4].estadoCensista = LIBERADO;
 		list[4].isEmpty = 0;
 		list[4].datosNacimiento.diaNacimiento = 10;
 		list[4].datosNacimiento.mesNacimiento = 9;
-		list[4].datosNacimiento.anioNacimiento = 1991;
-		strncpy(list[4].direccionCensista.calle, "Washington",sizeof(list[4].direccionCensista.calle));
-		list[4].direccionCensista.altura = 354;
+		list[4].datosNacimiento.anioNacimiento = 2000;
+		strncpy(list[4].direccionCensista.calle, "Elpasado",sizeof(list[4].name));
+		list[4].direccionCensista.altura = 2057;
 		list[4].idZona = -1;
 }
 
