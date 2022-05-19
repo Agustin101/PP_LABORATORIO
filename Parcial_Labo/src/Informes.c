@@ -215,36 +215,40 @@ void listarZonas(zonaCenso * zonas, int lenZonas, Censista * censistas, int lenC
 	int estado = 0;
 
 	if(zonas != NULL && lenZonas > 0 && censistas != NULL && lenCensistas > 0){
-
-		for(int i = 0; i < lenZonas; i++){
+		if(hayZona(zonas,lenZonas)==1){
+			for(int i = 0; i < lenZonas; i++){
 
 			flagSinCensista = 0;
-			if(zonas[i].isEmpty == 0){
+				if(zonas[i].isEmpty == 0){
 
-				 for(int j = 0; j < lenCensistas; j++){
-					if(zonas[i].idCensistaAsignado == censistas[j].idCensista){
-						flagSinCensista = 1;
-						mostrarZona(zonas[i],  censistas[j]);
-						break;
+					for(int j = 0; j < lenCensistas; j++){
+						if(zonas[i].idCensistaAsignado == censistas[j].idCensista){
+							flagSinCensista = 1;
+							mostrarZona(zonas[i],  censistas[j]);
+							break;
+						}
 					}
-				 }
-				 if(flagSinCensista == 0){
+					if(flagSinCensista == 0){
 
-					 localidad = zonas[i].localidad;
-					 localidad--;
-					 estado = zonas[i].estadoZona;
-					 estado--;
+						localidad = zonas[i].localidad;
+						localidad--;
+						estado = zonas[i].estadoZona;
+						estado--;
 
-					 printf("\n_____________________________________________________________________________________________________");
-					 printf("\nZONA  LOCALIDAD   CALLES                  ESTADO      CENSISTA RESPONSABLE DE LA ZONA CENSADOS       ");
-					 printf("\n_____________________________________________________________________________________________________");
-					 printf("\n%-5i %-10s  %-20s    %-11s ZONA SIN CENSISTA ASIGNADO      In situ:  %-5i               \n",zonas[i].idZona,auxLocalidad[localidad],zonas[i].calles[0],auxEstado[estado],zonas[i].censadosInSitu);
-					 printf("                  %-20s                                                Virtual:  %-5i \n",zonas[i].calles[1],zonas[i].censadosVirtual);
-					 printf("                  %-20s                                                Ausentes: %-5i             \n",zonas[i].calles[2],zonas[i].ausentes);
-					 printf("                  %-20s\n",zonas[i].calles[3]);
+						printf("\n_____________________________________________________________________________________________________");
+						printf("\nZONA  LOCALIDAD   CALLES                  ESTADO      CENSISTA RESPONSABLE DE LA ZONA CENSADOS       ");
+						printf("\n_____________________________________________________________________________________________________");
+						printf("\n%-5i %-10s  %-20s    %-11s ZONA SIN CENSISTA ASIGNADO      In situ:  %-5i               \n",zonas[i].idZona,auxLocalidad[localidad],zonas[i].calles[0],auxEstado[estado],zonas[i].censadosInSitu);
+						printf("                  %-20s                                                Virtual:  %-5i \n",zonas[i].calles[1],zonas[i].censadosVirtual);
+						printf("                  %-20s                                                Ausentes: %-5i             \n",zonas[i].calles[2],zonas[i].ausentes);
+						printf("                  %-20s\n",zonas[i].calles[3]);
+					}
 				}
-			}
 
+			}
+		}
+		else{
+			printf("\nDebe cargar una zona para acceder a esta opcion.");
 		}
 	}
 }
