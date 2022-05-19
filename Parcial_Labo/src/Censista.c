@@ -59,7 +59,7 @@ int agregarCensista(Censista *censistas, int len) {
 				censistas[indiceVacio].estadoCensista = LIBERADO;
 				censistas[indiceVacio].idCensista = censistaId();
 				censistas[indiceVacio].isEmpty = 0;
-				censistas[indiceVacio].idZona = 0;
+
 				retorno = 0;
 				printf("Carga exitosa.\n");
 				mensajeGenerico("Presione una tecla para continuar...\n");
@@ -218,34 +218,65 @@ int sortPassengersByName(Censista *list, int len, int order) {
  * \param list Censista* puntero al array de censistas
  * \param length int largo del array.
  */
+//void printCensistas(Censista *censistas, int length) {
+//char estadoAux[12];
+//char estados[3][12]= {"LIBERADO", "ACTIVO", "INACTIVO"};
+//
+//	if (censistas != NULL && length > 0) {
+//		if(hayCensista(censistas, length) == 1){
+//
+//
+//			printf("\n___________________________________________________________________________________________");
+//			printf("\nNOMBRE         APELLIDO        FECHA NAC  DIRECCION                 ESTADO      EDAD  ID   ");
+//			printf("\n___________________________________________________________________________________________");
+//
+//			for (int i = 0; i < length; i++) {
+//				switch(censistas[i].estadoCensista){
+//				case LIBERADO:
+//					strncpy(estadoAux, "LIBERADO",sizeof(estadoAux));
+//					break;
+//				case ACTIVO:
+//					strncpy(estadoAux, "ACTIVO",sizeof(estadoAux));
+//					break;
+//				case INACTIVO:
+//					strncpy(estadoAux,"INACTIVO",sizeof(estadoAux));
+//					break;
+//				}
+//				if (censistas[i].isEmpty == 0) {
+//					printf(
+//							"\n%-15s%-15s %-2.i/%-2.i/%-4.i %-20s %-5i %-9s   %-2i    %-5i\n\n",
+//							censistas[i].name, censistas[i].lastName, censistas[i].datosNacimiento.diaNacimiento,censistas[i].datosNacimiento.mesNacimiento,censistas[i].datosNacimiento.anioNacimiento,
+//							censistas[i].direccionCensista.calle,censistas[i].direccionCensista.altura,estadoAux,censistas[i].edadCensista,censistas[i].idCensista);
+//				}
+//			}
+//			mensajeGenerico("Presione una tecla para continuar...\n");
+//			fflush(stdin);
+//			getchar();
+//		}
+//		else{
+//			printf("Debe cargar al menos un censista para acceder a esta opcion.\n");
+//		}
+//	}
+//
+//}
+
 void printCensistas(Censista *censistas, int length) {
-char estadoAux[12];
+char estados[3][12]= {"LIBERADO", "ACTIVO", "INACTIVO"};
+int estadoCensista;
 
 	if (censistas != NULL && length > 0) {
 		if(hayCensista(censistas, length) == 1){
-
-
-			printf("\n___________________________________________________________________________________________");
-			printf("\nNOMBRE         APELLIDO        FECHA NAC  DIRECCION                 ESTADO      EDAD  ID   ");
-			printf("\n___________________________________________________________________________________________");
-
+			printf("\n____________________________________________________________________________________________");
+			printf("\nNOMBRE         APELLIDO        FECHA NAC  DIRECCION                  ESTADO      EDAD  ID   ");
+			printf("\n____________________________________________________________________________________________");
 			for (int i = 0; i < length; i++) {
-				switch(censistas[i].estadoCensista){
-				case LIBERADO:
-					strncpy(estadoAux, "LIBERADO",sizeof(estadoAux));
-					break;
-				case ACTIVO:
-					strncpy(estadoAux, "ACTIVO",sizeof(estadoAux));
-					break;
-				case INACTIVO:
-					strncpy(estadoAux,"INACTIVO",sizeof(estadoAux));
-					break;
-				}
+				estadoCensista = censistas[i].estadoCensista;
+				estadoCensista--;
 				if (censistas[i].isEmpty == 0) {
 					printf(
 							"\n%-15s%-15s %-2.i/%-2.i/%-4.i %-20s %-5i %-9s   %-2i    %-5i\n\n",
 							censistas[i].name, censistas[i].lastName, censistas[i].datosNacimiento.diaNacimiento,censistas[i].datosNacimiento.mesNacimiento,censistas[i].datosNacimiento.anioNacimiento,
-							censistas[i].direccionCensista.calle,censistas[i].direccionCensista.altura,estadoAux,censistas[i].edadCensista,censistas[i].idCensista);
+							censistas[i].direccionCensista.calle,censistas[i].direccionCensista.altura,estados[estadoCensista],censistas[i].edadCensista,censistas[i].idCensista);
 				}
 			}
 			mensajeGenerico("Presione una tecla para continuar...\n");
@@ -256,9 +287,7 @@ char estadoAux[12];
 			printf("Debe cargar al menos un censista para acceder a esta opcion.\n");
 		}
 	}
-
 }
-
 
 
 /// @brief Encuentra un indice libre en el array de censistas.
@@ -285,7 +314,7 @@ int findFreeIndex(Censista *list, int len) {
 ///
 /// @param list Censista* puntero al array de censistas.
 /// @param len int largo del array.
-/// @return int Retorna (-1) si tiene error o no puede encontrar un censista - 1 si al menos hay uno.
+/// @return int Retorna (0) si tiene error o no puede encontrar un censista - 1 si al menos hay uno.
 int hayCensista(Censista *list, int len) {
 	int retorno;
 	retorno = 0;
@@ -300,7 +329,26 @@ int hayCensista(Censista *list, int len) {
 	}
 	return retorno;
 }
+/// @brief Verifica si hay al menos un censista con el estado ACTIVO
+/// en el array de censistas.
+///
+/// @param list Censista* puntero al array de censistas.
+/// @param len int largo del array.
+/// @return int Retorna (0) si tiene error o no puede encontrar un censista - 1 si al menos hay uno.
+int hayCensistaActivo(Censista *list, int len) {
+	int retorno;
+	retorno = 0;
 
+	if (list != NULL && len > 0) {
+		for (int i = 0; i < len; i++) {
+			if (list[i].isEmpty == 0 && list[i].estadoCensista == ACTIVO) {
+				retorno = 1;
+				break;
+			}
+		}
+	}
+	return retorno;
+}
 
 /// @brief Modifica un campo del censista indicando por el usuario.
 ///
@@ -481,7 +529,7 @@ void cargaForzadaCensistas(Censista * list)
 		list[0].datosNacimiento.anioNacimiento = 1973;
 		strncpy(list[0].direccionCensista.calle, "Avenida mitre",sizeof(list[0].direccionCensista.calle));
 		list[0].direccionCensista.altura = 500;
-		list[0].idZona = -1;
+
 
 		strncpy(list[1].name, "Marcos",sizeof(list[1].name));
 		strncpy(list[1].lastName, "Amarillo",sizeof(list[1].lastName));
@@ -494,7 +542,7 @@ void cargaForzadaCensistas(Censista * list)
 		list[1].datosNacimiento.anioNacimiento = 2002;
 		strncpy(list[1].direccionCensista.calle, "Donato alvarez",sizeof(list[1].direccionCensista.calle));
 		list[1].direccionCensista.altura = 2057;
-		list[1].idZona = -1;
+
 
 		strncpy(list[2].name, "Pedro",sizeof(list[2].name));
 		strncpy(list[2].lastName, "Diaz",sizeof(list[2].lastName));
@@ -507,7 +555,7 @@ void cargaForzadaCensistas(Censista * list)
 		list[2].datosNacimiento.anioNacimiento = 1993;
 		strncpy(list[2].direccionCensista.calle, "Victor hugo",sizeof(list[2].direccionCensista.calle));
 		list[2].direccionCensista.altura = 1453;
-		list[2].idZona = -1;
+
 
 		strncpy(list[3].name, "Juanita",sizeof(list[3].name));
 		strncpy(list[3].lastName, "Lavo",sizeof(list[3].lastName));
@@ -520,7 +568,7 @@ void cargaForzadaCensistas(Censista * list)
 		list[3].datosNacimiento.anioNacimiento = 2003;
 		strncpy(list[3].direccionCensista.calle, "belgrano",sizeof(list[3].direccionCensista.calle));
 		list[3].direccionCensista.altura = 652;
-		list[3].idZona = -1;
+
 
 		strncpy(list[4].name, "Jorge",sizeof(list[4].name));
 		strncpy(list[4].lastName, "Dotero",sizeof(list[4].lastName));
@@ -533,7 +581,7 @@ void cargaForzadaCensistas(Censista * list)
 		list[4].datosNacimiento.anioNacimiento = 1991;
 		strncpy(list[4].direccionCensista.calle, "Washington",sizeof(list[4].direccionCensista.calle));
 		list[4].direccionCensista.altura = 354;
-		list[4].idZona = -1;
+
 }
 
 /** @brief Busca en el array de censistas el primer censista en estado

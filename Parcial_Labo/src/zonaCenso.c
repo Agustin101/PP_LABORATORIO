@@ -20,7 +20,6 @@ int initZonas(zonaCenso *list, int len) {
 	if (list != NULL && len > 0) {
 		for (int i = 0; i < len; i++) {
 			list[i].isEmpty = 1;
-			list[i].localidad = i+1;
 		}
 		retorno = 0;
 	}
@@ -230,7 +229,7 @@ void cargaForzadaZona(zonaCenso * zonas)
 		zonas[0].censadosInSitu = 0;
 		zonas[0].censadosVirtual = 0;
 		zonas[0].ausentes = 0;
-		zonas[0].idCensistaAsignado = 0;
+
 
 
 		zonas[1].isEmpty = 0;
@@ -244,7 +243,7 @@ void cargaForzadaZona(zonaCenso * zonas)
 		zonas[1].censadosInSitu = 0;
 		zonas[1].censadosVirtual = 0;
 		zonas[1].ausentes = 0;
-		zonas[1].idCensistaAsignado = 0;
+
 
 		zonas[2].isEmpty = 0;
 		zonas[2].estadoZona = PENDIENTE;
@@ -257,7 +256,7 @@ void cargaForzadaZona(zonaCenso * zonas)
 		zonas[2].censadosInSitu = 0;
 		zonas[2].censadosVirtual = 0;
 		zonas[2].ausentes = 0;
-		zonas[2].idCensistaAsignado = 0;
+
 
 		zonas[3].isEmpty = 0;
 		zonas[3].estadoZona = PENDIENTE;
@@ -270,7 +269,7 @@ void cargaForzadaZona(zonaCenso * zonas)
 		zonas[3].censadosInSitu = 0;
 		zonas[3].censadosVirtual = 0;
 		zonas[3].ausentes = 0;
-		zonas[3].idCensistaAsignado = 0;
+
 
 		zonas[4].isEmpty = 0;
 		zonas[4].estadoZona = PENDIENTE;
@@ -283,7 +282,7 @@ void cargaForzadaZona(zonaCenso * zonas)
 		zonas[4].censadosInSitu = 0;
 		zonas[4].censadosVirtual = 0;
 		zonas[4].ausentes = 0;
-		zonas[4].idCensistaAsignado = 0;
+
 
 
 		zonas[5].isEmpty = 0;
@@ -297,7 +296,7 @@ void cargaForzadaZona(zonaCenso * zonas)
 		zonas[5].censadosInSitu = 0;
 		zonas[5].censadosVirtual = 0;
 		zonas[5].ausentes = 0;
-		zonas[5].idCensistaAsignado = 0;
+
 
 		zonas[6].isEmpty = 0;
 		zonas[6].estadoZona = PENDIENTE;
@@ -310,7 +309,7 @@ void cargaForzadaZona(zonaCenso * zonas)
 		zonas[6].censadosInSitu = 0;
 		zonas[6].censadosVirtual = 0;
 		zonas[6].ausentes = 0;
-		zonas[6].idCensistaAsignado = 0;
+
 
 		zonas[7].isEmpty = 0;
 		zonas[7].estadoZona = PENDIENTE;
@@ -323,7 +322,7 @@ void cargaForzadaZona(zonaCenso * zonas)
 		zonas[7].censadosInSitu = 0;
 		zonas[7].censadosVirtual = 0;
 		zonas[7].ausentes = 0;
-		zonas[7].idCensistaAsignado = 0;
+
 
 }
 
@@ -342,7 +341,7 @@ int zonaId(void) {
 ///
 /// @param zonas zonaCenso* puntero al array de zonas.
 /// @param len int largo del array.
-/// @return int Retorna (-1) si tiene error o no puede encontrar un censista - 1 si al menos hay uno.
+/// @return int Retorna (0) si tiene error o no puede encontrar una zona - 1 si al menos hay uno.
 int hayZona(zonaCenso *zonas, int len) {
 	int retorno;
 	retorno = 0;
@@ -350,6 +349,27 @@ int hayZona(zonaCenso *zonas, int len) {
 	if (zonas != NULL && len > 0) {
 		for (int i = 0; i < len; i++) {
 			if (zonas[i].isEmpty == 0) {
+				retorno = 1;
+				break;
+			}
+		}
+	}
+	return retorno;
+}
+
+/// @brief Verifica si hay al menos una zona cargada y pendiente
+/// en el array de zonas.
+///
+/// @param zonas zonaCenso* puntero al array de zonas.
+/// @param len int largo del array.
+/// @return int Retorna (0) si tiene error o no puede encontrar una zona - 1 si al menos hay una.
+int hayZonaPendiente(zonaCenso *zonas, int len) {
+	int retorno;
+	retorno = 0;
+
+	if (zonas != NULL && len > 0) {
+		for (int i = 0; i < len; i++) {
+			if (zonas[i].isEmpty == 0 && zonas[i].estadoZona == PENDIENTE) {
 				retorno = 1;
 				break;
 			}

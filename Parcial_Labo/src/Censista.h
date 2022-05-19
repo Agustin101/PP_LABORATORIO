@@ -49,4 +49,5 @@ void cargaForzadaCensistas(Censista * list);
 int encontrarCensistaLiberado(Censista *list, int len);
 int encontrarCensistaPorIdZona(Censista *cencistas, int len, int id);
 int verificarCensista(Censista *censistas, int len, int idZona);
+int hayCensistaActivo(Censista *list, int len) ;
 #endif /* CENSISTA_H_ */

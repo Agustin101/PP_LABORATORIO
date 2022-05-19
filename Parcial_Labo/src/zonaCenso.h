@@ -19,15 +19,15 @@
 
 
 struct{
-	char calles[4][51]; //ya
-	int localidad; //ya
+	char calles[4][51];
+	int localidad;
 	int censadosInSitu;
 	int censadosVirtual;
 	int ausentes;
-	int estadoZona; //ya
-	int isEmpty; //no
-	int idZona;  //ya
-	int idCensistaAsignado; //no
+	int estadoZona;
+	int isEmpty;
+	int idZona;
+	int idCensistaAsignado;
 }typedef zonaCenso;
 
 void cargaForzadaZona(zonaCenso * zonas);
@@ -41,4 +41,5 @@ int printZonaCensar(zonaCenso * zonas, int length);
 int hayZona(zonaCenso *zonas, int len);
 int buscarZonaPendiente(zonaCenso *zonas, int lenZonas);
 int verificarZona(zonaCenso *zonas, int len, int id);
+int hayZonaPendiente(zonaCenso *zonas, int len);
 #endif /* ZONACENSO_H_ */
