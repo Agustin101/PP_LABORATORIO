@@ -43,7 +43,6 @@ int initCensistas(Censista* list, int len);
 int findFreeIndex(Censista* list,int len);
 int hayCensista(Censista *list, int len);
 int modificarCensista(Censista *list, int len);
-int promedioPassengers(Censista * list, int len );
 int censistaId(void);
 void cargaForzadaCensistas(Censista * list);
 int encontrarCensistaLiberado(Censista *list, int len);

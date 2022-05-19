@@ -111,7 +111,6 @@ int findCensistaById(Censista *list, int len, int id) {
  * \return int Retorna -1 si hay error o 0si puede cambiar el estado del censista.
  *
  */
-
 int removeCensista(Censista *censista, int len) {
 	int retorno;
 	int indiceAEliminar;

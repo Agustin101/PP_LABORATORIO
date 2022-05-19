@@ -31,7 +31,6 @@ struct{
 }typedef zonaCenso;
 
 void cargaForzadaZona(zonaCenso * zonas);
-int printZonas(zonaCenso * zonas, int length);
 int initZonas(zonaCenso *list, int len);
 int zonaId(void);
 int encontrarZonaPorId(zonaCenso *zonas, int len, int id);
