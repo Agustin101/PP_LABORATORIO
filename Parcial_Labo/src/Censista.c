@@ -151,66 +151,8 @@ int removeCensista(Censista *censista, int len) {
  * \param order int [1] indicate UP - [0] indicate DOWN
  * \return int Return (-1) if Error [Invalid length or NULL pointer] - (0) if Ok*
  */
-/*
-int sortPassengersByName(Censista *list, int len, int order) {
-	int retorno;
-	int i;
-	int estaOrdenado;
-	retorno = -1;
 
-	Censista aux;
 
-	if (list != NULL && len > 0) {
-		if (order == 0) {
-			do {
-				estaOrdenado = 1;
-				len--;
-				for (i = 0; i < len; i++) {
-					if (stricmp(list[i].lastName, list[i + 1].lastName) < 0) {
-						aux = list[i];
-						list[i] = list[i + 1];
-						list[i + 1] = aux;
-						estaOrdenado = 0;
-					} else if (stricmp(list[i].lastName, list[i + 1].lastName)
-							== 0
-							&& list[i].edadCensista
-									< list[i + 1].edadCensista) {
-						aux = list[i];
-						list[i] = list[i + 1];
-						list[i + 1] = aux;
-						estaOrdenado = 0;
-					}
-				}
-			} while (estaOrdenado == 0);
-
-		} else if (order == 1) {
-			do {
-				estaOrdenado = 1;
-				len--;
-				for (i = 0; i < len; i++) {
-					if (stricmp(list[i].lastName, list[i + 1].lastName) > 0) {
-						aux = list[i];
-						list[i] = list[i + 1];
-						list[i + 1] = aux;
-						estaOrdenado = 0;
-					} else if (stricmp(list[i].lastName, list[i + 1].lastName)
-							== 0
-							&& list[i].edadCensista
-									> list[i + 1].edadCensista) {
-						aux = list[i];
-						list[i] = list[i + 1];
-						list[i + 1] = aux;
-						estaOrdenado = 0;
-					}
-				}
-			} while (estaOrdenado == 0);
-		}
-		retorno = 0;
-	}
-
-	return retorno;
-}
-*/
 
 /** \brief Imprime el contenido en el array de censistas.
  *
