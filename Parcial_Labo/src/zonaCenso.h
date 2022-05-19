@@ -19,15 +19,15 @@
 
 
 struct{
-	char calles[4][51];
-	int localidad;
+	char calles[4][51]; //ya
+	int localidad; //ya
 	int censadosInSitu;
 	int censadosVirtual;
 	int ausentes;
-	int estadoZona;
-	int isEmpty;
-	int idZona;
-	int idCensistaAsignado;
+	int estadoZona; //ya
+	int isEmpty; //no
+	int idZona;  //ya
+	int idCensistaAsignado; //no
 }typedef zonaCenso;
 
 void cargaForzadaZona(zonaCenso * zonas);

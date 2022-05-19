@@ -8,7 +8,7 @@
 #include "informes.h"
 
 void printCargaDeDatos(zonaCenso * zonas, int lenZonas, Censista * censista, int lenCensistas){
-	int retorno = -1;
+
 
 		if (zonas != NULL && lenZonas > 0 && censista != NULL && lenCensistas > 0) {
 			for (int i = 0; i < lenZonas; i++) {
@@ -249,9 +249,104 @@ void mostrarZonas(zonaCenso * zonas, int lenZonas, Censista * censistas, int len
 	}
 }
 
+void mostrarZona(zonaCenso  zonas,  Censista  censistas){
+	char auxLocalidad[51];
+	char auxEstado[15];
 
 
+		if(zonas.isEmpty == 0 && censistas.isEmpty == 0){
+			switch(zonas.localidad){
+			case LANUS:
+					strncpy(auxLocalidad, "LANUS",sizeof(auxLocalidad));
+				break;
+			case AVELLANEDA:
+					strncpy(auxLocalidad, "AVELLANEDA",sizeof(auxLocalidad));
+				break;
+			case GERLI:
+					strncpy(auxLocalidad,"GERLI",sizeof(auxLocalidad));
+				break;
+			case ALSINA:
+					strncpy(auxLocalidad,"ALSINA",sizeof(auxLocalidad));
+				break;
+			case BARRACAS:
+					strncpy(auxLocalidad,"BARRACAS",sizeof(auxLocalidad));
+				break;
+			}
+			switch(zonas.estadoZona){
+			case PENDIENTE:
+				strncpy(auxEstado,"PENDIENTE",sizeof(auxEstado));
+				break;
+			case FINALIZADO:
+				strncpy(auxEstado,"FINALIZADA",sizeof(auxEstado));
+				break;
+			}
+			printf("\n_____________________________________________________________________________________________________");
+		    printf("\nZONA  LOCALIDAD   CALLES                  ESTADO      CENSISTA RESPONSABLE DE LA ZONA CENSADOS       ");
+			printf("\n_____________________________________________________________________________________________________");
+			printf("\n%-5i %-10s  %-20s    %-11s %-15s %-15s In situ:  %-5i\n",zonas.idZona,auxLocalidad,zonas.calles[0],auxEstado,censistas.name,censistas.lastName,zonas.censadosInSitu);
+			printf("                  %-20s                                                Virtual:  %-5i \n",zonas.calles[1],zonas.censadosVirtual);
+			printf("                  %-20s                                                Ausentes: %-5i \n",zonas.calles[2],zonas.ausentes);
+			printf("                  %-20s                                     \n",zonas.calles[3]);
+		}
+}
 
+int listarZonas(zonaCenso * zonas, int lenZonas, Censista * censistas, int lenCensistas){
+	int retorno = -1;
+	int flagSinCensista;
+	char auxLocalidad[51];
+	char auxEstado[15];
+
+	if(zonas != NULL && lenZonas > 0 && censistas != NULL && lenCensistas > 0){
+		for(int i = 0; i < lenZonas; i++){
+			flagSinCensista = 0;
+			if(zonas[i].isEmpty == 0){
+				 for(int j = 0; j < lenCensistas; j++){
+					if(zonas[i].idCensistaAsignado == censistas[j].idCensista){
+						flagSinCensista = 1;
+						mostrarZona(zonas[i],  censistas[j]);
+						break;
+					}
+				 }
+				 if(flagSinCensista == 0){
+					 switch(zonas[i].localidad){
+					 			case LANUS:
+					 					strncpy(auxLocalidad, "LANUS",sizeof(auxLocalidad));
+					 				break;
+					 			case AVELLANEDA:
+					 					strncpy(auxLocalidad, "AVELLANEDA",sizeof(auxLocalidad));
+					 				break;
+					 			case GERLI:
+					 					strncpy(auxLocalidad,"GERLI",sizeof(auxLocalidad));
+					 				break;
+					 			case ALSINA:
+					 					strncpy(auxLocalidad,"ALSINA",sizeof(auxLocalidad));
+					 				break;
+					 			case BARRACAS:
+					 					strncpy(auxLocalidad,"BARRACAS",sizeof(auxLocalidad));
+					 				break;
+					 			}
+					 			switch(zonas[i].estadoZona){
+					 			case PENDIENTE:
+					 				strncpy(auxEstado,"PENDIENTE",sizeof(auxEstado));
+					 				break;
+					 			case FINALIZADO:
+					 				strncpy(auxEstado,"FINALIZADA",sizeof(auxEstado));
+					 				break;
+					 			}
+
+					 printf("\n_____________________________________________________________________________________________________");
+					 printf("\nZONA  LOCALIDAD   CALLES                  ESTADO      CENSISTA RESPONSABLE DE LA ZONA CENSADOS       ");
+					 printf("\n_____________________________________________________________________________________________________");
+					 printf("\n%-5i %-10s  %-20s    %-11s ZONA SIN CENSISTA ASIGNADO      In situ:  %-5i               \n",zonas[i].idZona,auxLocalidad,zonas[i].calles[0],auxEstado,zonas[i].censadosInSitu);
+					 printf("                  %-20s                                                Virtual:  %-5i \n",zonas[i].calles[1],zonas[i].censadosVirtual);
+					 printf("                  %-20s                                                Ausentes: %-5i             \n",zonas[i].calles[2],zonas[i].ausentes);
+					 printf("                  %-20s\n",zonas[i].calles[3]);
+				}
+			}
+		}
+	}
+	return retorno;
+}
 
 
 

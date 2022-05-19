@@ -61,16 +61,15 @@ int main(void) {
 					printCensistas(censistas, LEN_CEN);
 				break;
 			case 8:
-				printZonasyCensistas(zonasACensar, LEN_CEN, censistas);
+					listarZonas(zonasACensar, LEN_ZONAS, censistas,LEN_CEN);
 				break;
 			case 9:
-				cargaForzadaCensistas(censistas);
+					cargaForzadaCensistas(censistas);
 				break;
 			case 10:
-				cargaForzadaZona(zonasACensar);
+					cargaForzadaZona(zonasACensar);
 				break;
 			case 11:
-
 				break;
 			case 12:
 				break;

@@ -74,6 +74,9 @@ int cargarZona(zonaCenso * zonas, int len, int localidad){
 							zonas[indiceLibre].idZona = zonaId();
 							zonas[indiceLibre].isEmpty = 0;
 							zonas[indiceLibre].localidad = LANUS;
+							zonas[indiceLibre].censadosInSitu = 0;
+							zonas[indiceLibre].censadosVirtual = 0;
+							zonas[indiceLibre].ausentes = 0;
 						}
 					}
 					break;
@@ -88,6 +91,9 @@ int cargarZona(zonaCenso * zonas, int len, int localidad){
 							zonas[indiceLibre].idZona = zonaId();
 							zonas[indiceLibre].isEmpty = 0;
 							zonas[indiceLibre].localidad = AVELLANEDA;
+							zonas[indiceLibre].censadosInSitu = 0;
+							zonas[indiceLibre].censadosVirtual = 0;
+							zonas[indiceLibre].ausentes = 0;
 						}
 					}
 					break;
@@ -102,6 +108,9 @@ int cargarZona(zonaCenso * zonas, int len, int localidad){
 							zonas[indiceLibre].idZona = zonaId();
 							zonas[indiceLibre].isEmpty = 0;
 							zonas[indiceLibre].localidad = GERLI;
+							zonas[indiceLibre].censadosInSitu = 0;
+							zonas[indiceLibre].censadosVirtual = 0;
+							zonas[indiceLibre].ausentes = 0;
 						}
 					}
 					break;
@@ -116,6 +125,9 @@ int cargarZona(zonaCenso * zonas, int len, int localidad){
 							zonas[indiceLibre].idZona = zonaId();
 							zonas[indiceLibre].isEmpty = 0;
 							zonas[indiceLibre].localidad = ALSINA;
+							zonas[indiceLibre].censadosInSitu = 0;
+							zonas[indiceLibre].censadosVirtual = 0;
+							zonas[indiceLibre].ausentes = 0;
 						}
 					}
 					break;
@@ -130,6 +142,9 @@ int cargarZona(zonaCenso * zonas, int len, int localidad){
 							zonas[indiceLibre].idZona = zonaId();
 							zonas[indiceLibre].isEmpty = 0;
 							zonas[indiceLibre].localidad = BARRACAS;
+							zonas[indiceLibre].censadosInSitu = 0;
+							zonas[indiceLibre].censadosVirtual = 0;
+							zonas[indiceLibre].ausentes = 0;
 						}
 					}
 					break;
