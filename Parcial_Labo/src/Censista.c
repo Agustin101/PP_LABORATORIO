@@ -218,48 +218,6 @@ int sortPassengersByName(Censista *list, int len, int order) {
  * \param list Censista* puntero al array de censistas
  * \param length int largo del array.
  */
-//void printCensistas(Censista *censistas, int length) {
-//char estadoAux[12];
-//char estados[3][12]= {"LIBERADO", "ACTIVO", "INACTIVO"};
-//
-//	if (censistas != NULL && length > 0) {
-//		if(hayCensista(censistas, length) == 1){
-//
-//
-//			printf("\n___________________________________________________________________________________________");
-//			printf("\nNOMBRE         APELLIDO        FECHA NAC  DIRECCION                 ESTADO      EDAD  ID   ");
-//			printf("\n___________________________________________________________________________________________");
-//
-//			for (int i = 0; i < length; i++) {
-//				switch(censistas[i].estadoCensista){
-//				case LIBERADO:
-//					strncpy(estadoAux, "LIBERADO",sizeof(estadoAux));
-//					break;
-//				case ACTIVO:
-//					strncpy(estadoAux, "ACTIVO",sizeof(estadoAux));
-//					break;
-//				case INACTIVO:
-//					strncpy(estadoAux,"INACTIVO",sizeof(estadoAux));
-//					break;
-//				}
-//				if (censistas[i].isEmpty == 0) {
-//					printf(
-//							"\n%-15s%-15s %-2.i/%-2.i/%-4.i %-20s %-5i %-9s   %-2i    %-5i\n\n",
-//							censistas[i].name, censistas[i].lastName, censistas[i].datosNacimiento.diaNacimiento,censistas[i].datosNacimiento.mesNacimiento,censistas[i].datosNacimiento.anioNacimiento,
-//							censistas[i].direccionCensista.calle,censistas[i].direccionCensista.altura,estadoAux,censistas[i].edadCensista,censistas[i].idCensista);
-//				}
-//			}
-//			mensajeGenerico("Presione una tecla para continuar...\n");
-//			fflush(stdin);
-//			getchar();
-//		}
-//		else{
-//			printf("Debe cargar al menos un censista para acceder a esta opcion.\n");
-//		}
-//	}
-//
-//}
-
 void printCensistas(Censista *censistas, int length) {
 char estados[3][12]= {"LIBERADO", "ACTIVO", "INACTIVO"};
 int estadoCensista;
@@ -355,7 +313,6 @@ int hayCensistaActivo(Censista *list, int len) {
 /// @param list Censista * puntero al array de censistas.
 /// @param len int largo del array.
 /// @return int Retorna (-1) si tiene error  - 0 si pudo realizar los cambios correctamente.
-
 int modificarCensista(Censista *list, int len){
 	int retorno = -1;
 	int idAux;

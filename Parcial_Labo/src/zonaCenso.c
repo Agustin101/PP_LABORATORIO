@@ -175,42 +175,7 @@ int encontrarPosicionLibre(zonaCenso *zonas, int len) {
 	return retorno;
 }
 
-int printZonaCensar(zonaCenso * zonas, int length){
-	int retorno = -1;
-	char auxLocalidad[51];
 
-		if (zonas != NULL && length > 0) {
-			for (int i = 0; i < length; i++) {
-				switch(zonas[i].localidad){
-				case LANUS:
-						strncpy(auxLocalidad, "LANUS",sizeof(auxLocalidad));
-					break;
-				case AVELLANEDA:
-						strncpy(auxLocalidad, "AVELLANEDA",sizeof(auxLocalidad));
-					break;
-				case GERLI:
-						strncpy(auxLocalidad,"GERLI",sizeof(auxLocalidad));
-					break;
-				case ALSINA:
-						strncpy(auxLocalidad,"ALSINA",sizeof(auxLocalidad));
-					break;
-				case BARRACAS:
-						strncpy(auxLocalidad,"BARRACAS",sizeof(auxLocalidad));
-					break;
-				}
-				if (zonas[i].isEmpty == 0) {
-					printf("\n______________________________");
-					printf("\nZONA  LOCALIDAD       CALLES  ");
-					printf("\n______________________________");
-					printf("\n%-4i  %-15s%-20s\n",zonas[i].idZona,auxLocalidad,zonas[i].calles[0]);
-					printf("                     %-20s\n",zonas[i].calles[1]);
-					printf("                     %-20s\n",zonas[i].calles[2]);
-					printf("                     %-20s\n",zonas[i].calles[3]);
-				}
-			}
-		}
-	return retorno;
-}
 
 /** @brief Carga 8 zonas a censar de manera automatica en las primeras
  * 8 posiciones del array de zonas.
@@ -218,6 +183,8 @@ int printZonaCensar(zonaCenso * zonas, int length){
  */
 void cargaForzadaZona(zonaCenso * zonas)
 {
+
+
 		zonas[0].isEmpty = 0;
 		zonas[0].estadoZona = PENDIENTE;
 		zonas[0].idZona = zonaId();
@@ -322,6 +289,7 @@ void cargaForzadaZona(zonaCenso * zonas)
 		zonas[7].censadosInSitu = 0;
 		zonas[7].censadosVirtual = 0;
 		zonas[7].ausentes = 0;
+
 
 
 }

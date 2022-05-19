@@ -37,7 +37,6 @@ int zonaId(void);
 int encontrarZonaPorId(zonaCenso *zonas, int len, int id);
 int encontrarPosicionLibre(zonaCenso *zonas, int len);
 int cargarZona(zonaCenso * zonas, int len, int localidad);
-int printZonaCensar(zonaCenso * zonas, int length);
 int hayZona(zonaCenso *zonas, int len);
 int buscarZonaPendiente(zonaCenso *zonas, int lenZonas);
 int verificarZona(zonaCenso *zonas, int len, int id);
